@@ -4,9 +4,9 @@ orbs:
   serverless: circleci/serverless-framework@1.0
 
 defaults: &defaults
-  working_directory: ~/repo
   docker:
     - image: circleci/node:14
+  working_directory: ~/repo
 jobs:
   build_and_test:
     <<: *defaults
@@ -42,9 +42,10 @@ jobs:
   publish:
     <<: *defaults
     steps:
+      - checkout
       - serverless/setup
       - run:
-          name: Deploy on serverless
+          name: Serverless deploy application
           command: npm run deploy
 workflows:
   default:
