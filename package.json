@@ -1,0 +1,48 @@
+{
+  "name": "circleci_poc",
+  "version": "1.0.0",
+  "description": "A POC of a serverless circleCI pipeline",
+  "scripts": {
+    "test": "lerna run test",
+    "package": "serverless package",
+    "deploy": "serverless deploy",
+    "setup": "lerna clean --yes && lerna bootstrap"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skypomponiif/circleci_poc.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/skypomponiif/circleci_poc/issues"
+  },
+  "homepage": "https://github.com/skypomponiif/circleci_poc#readme",
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "lerna": "^4.0.0",
+    "mocha": "9.1.1",
+    "serverless-jetpack": "^0.11.1",
+    "serverless-prune-plugin": "^1.6.1"
+  },
+  "nyc": {
+    "include": [
+      "packages/**/src/**/*"
+    ],
+    "extension": [
+      ".js"
+    ],
+    "exclude": [
+      "**/*.d.js"
+    ],
+    "reporter": [
+      "html",
+      "lcov"
+    ],
+    "all": true
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1014.0",
+    "typescript": "^4.4.4"
+  }
+}

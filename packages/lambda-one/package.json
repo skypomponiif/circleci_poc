@@ -1,0 +1,26 @@
+{
+	"name": "lambda-one",
+	"version": "1.0.0",
+	"description": "",
+	"main": "handler.js",
+	"scripts": {
+		"package": "serverless package",
+		"deploy": "serverless deploy",
+		"test": "mocha test"
+	},
+	"author": "",
+	"license": "ISC",
+	"nyc": {
+		"include": [
+			"src/**/*.js"
+		],
+		"extension": [
+			".js"
+		],
+		"reporter": [
+			"html",
+			"lcov"
+		],
+		"all": true
+	}
+}
