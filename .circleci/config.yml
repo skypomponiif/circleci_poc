@@ -15,7 +15,6 @@ jobs:
     steps:
       - checkout
       - aws-cli/setup
-      - serverless/setup
 
       # Download and cache dependencies
       - restore_cache:
@@ -43,6 +42,7 @@ jobs:
   publish:
     <<: *defaults
     steps:
+      - serverless/setup
       - run:
           name: Deploy on serverless
           command: sls deploy
