@@ -46,7 +46,9 @@ jobs:
       - serverless/setup
       - run:
           name: Serverless deploy application
-          command: npm run deploy
+          command: |
+            npm install
+            npm run deploy
 workflows:
   default:
     jobs:
