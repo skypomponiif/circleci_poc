@@ -74,6 +74,7 @@ workflows:
       - publish:
           filters:
             branches:
-              only: /master\/.*/
+              only:
+                - master
           requires:
             - build_and_test
