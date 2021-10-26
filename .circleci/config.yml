@@ -8,6 +8,8 @@ jobs:
 
     steps:
       - checkout
+      - aws-cli/setup
+      - serverless/setup
 
       # Download and cache dependencies
       - restore_cache:
@@ -19,7 +21,6 @@ jobs:
       - run:
           name: Install Serverless CLI and dependencies
           command: |
-            sudo npm i -g serverless
             npm install
             npm run setup
             npm run compile
