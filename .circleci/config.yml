@@ -3,6 +3,11 @@ orbs:
   aws-cli: circleci/aws-cli@1.0
   serverless: circleci/serverless-framework@1.0
 
+parameters:
+  run_deploy:
+    type: boolean
+    default: false
+
 defaults: &defaults
   docker:
     - image: circleci/node:14
@@ -44,15 +49,38 @@ jobs:
     steps:
       - checkout
       - serverless/setup
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
       - run:
-          name: Serverless deploy application
+          name: Install and dependencies
           command: |
             npm install
+            npm run setup
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-
+
+      - run:
+          name: Serverless deploy application
+          command: 
             npm run deploy
+
 workflows:
   default:
     jobs:
       - build_and_test
+
+  deploy_application:
+    when: << pipeline.parameters.run_deploy >>
+    jobs:
+      - build_and_test
       - publish:
           requires:
-          - build_and_test
+            - build_and_test
