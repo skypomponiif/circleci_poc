@@ -26,7 +26,6 @@ jobs:
           command: |
             npm install
             npm run setup
-            npm run compile
 
       - save_cache:
           paths:
