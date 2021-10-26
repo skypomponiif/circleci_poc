@@ -3,11 +3,6 @@ orbs:
   aws-cli: circleci/aws-cli@1.0
   serverless: circleci/serverless-framework@1.0
 
-parameters:
-  run_deploy:
-    type: boolean
-    default: false
-
 defaults: &defaults
   docker:
     - image: circleci/node:14
@@ -76,11 +71,9 @@ workflows:
   default:
     jobs:
       - build_and_test
-
-  deploy_application:
-    when: << pipeline.parameters.run_deploy >>
-    jobs:
-      - build_and_test
       - publish:
+          filters:
+            branches:
+              only: /server\/.*/
           requires:
             - build_and_test
