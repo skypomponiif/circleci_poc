@@ -2,7 +2,6 @@ version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@1.0
   serverless: circleci/serverless-framework@1.0
-  newman: postman/newman@0.0.2
 
 defaults: &defaults
   working_directory: ~/repo
