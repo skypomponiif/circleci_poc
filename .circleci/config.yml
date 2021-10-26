@@ -1,13 +1,17 @@
 version: 2.1
 orbs:
-   aws-cli: circleci/aws-cli@1.0
-   serverless: circleci/serverless-framework@1.0
+  aws-cli: circleci/aws-cli@1.0
+  serverless: circleci/serverless-framework@1.0
+  newman: postman/newman@0.0.2
+
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:14
 jobs:
-  build:
-    
-    docker:
-      - image: circleci/node:14
-    working_directory: ~/repo
+  build_and_test:
+    <<: *defaults
+    description: "Runs unit tests"
     
     steps:
       - checkout
@@ -36,7 +40,17 @@ jobs:
       - run: 
           name: Run tests with coverage
           command: npm run test
-
+  
+  publish:
+    <<: *defaults
+    steps:
       - run:
-          name: Deploy application
-          command: npm run deploy
+          name: Deploy on serverless
+          command: sls deploy
+workflows:
+  default:
+    jobs:
+      - build_and_test
+      - publish:
+          requires:
+          - build_and_test
