@@ -8,7 +8,7 @@ defaults: &defaults
     - image: circleci/node:14
   working_directory: ~/repo
 jobs:
-  build_and_test:
+  build:
     <<: *defaults
     description: "Runs unit tests"
     
@@ -33,14 +33,17 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-
-        
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
+  test:
+    <<: *defaults
+    steps:
+      - checkout
       # run tests!
       - run: 
           name: Run tests with coverage
           command: npm run test
-      - persist_to_workspace:
-          root: ~/repo
-          paths: .
   publish:
     <<: *defaults
     steps:
@@ -57,11 +60,13 @@ jobs:
 workflows:
   default:
     jobs:
-      - build_and_test
+      - build
+      - test
       - publish:
           filters:
             branches:
               only:
                 - master
           requires:
-            - build_and_test
+            - build
+            - test
