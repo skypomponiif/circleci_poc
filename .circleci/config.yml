@@ -8,13 +8,12 @@ defaults: &defaults
     - image: circleci/node:14
   working_directory: ~/repo
 jobs:
-  build:
+  load_dependencies:
     <<: *defaults
-    description: "Runs unit tests"
+    description: "Load dependencies"
     
     steps:
       - checkout
-      - aws-cli/setup
 
       # Download and cache dependencies
       - restore_cache:
@@ -38,6 +37,7 @@ jobs:
           paths: .
   test:
     <<: *defaults
+    description: "Run tests"
     steps:
       - checkout
       - attach_workspace:
@@ -48,12 +48,13 @@ jobs:
           command: npm run test
   publish:
     <<: *defaults
+    description: "Publish on AWS w serverless"
     steps:
       - checkout
       - attach_workspace:
           at: ~/repo
       - serverless/setup
-
+      - aws-cli/setup
       - run:
           name: Serverless deploy application
           command: 
@@ -62,10 +63,10 @@ jobs:
 workflows:
   default:
     jobs:
-      - build
+      - load_dependencies
       - test:
           requires:
-            - build
+            - load_dependencies
       - publish:
           filters:
             branches:
