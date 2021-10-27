@@ -6,6 +6,7 @@ orbs:
 defaults: &defaults
   docker:
     - image: circleci/node:14
+  working_directory: ~/repo
 jobs:
   build_and_test:
     <<: *defaults
@@ -38,7 +39,7 @@ jobs:
           name: Run tests with coverage
           command: npm run test
       - persist_to_workspace:
-          root: ~/project
+          root: ~/repo
           paths:
             - "*.tar.gz"
             - "*.tgz"
@@ -47,7 +48,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: ~/project
+          at: ~/repo
       - serverless/setup
 
       - run:
