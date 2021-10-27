@@ -6,7 +6,6 @@ orbs:
 defaults: &defaults
   docker:
     - image: circleci/node:14
-  working_directory: ~/repo
 jobs:
   build_and_test:
     <<: *defaults
