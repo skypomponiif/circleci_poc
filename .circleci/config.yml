@@ -40,9 +40,7 @@ jobs:
           command: npm run test
       - persist_to_workspace:
           root: ~/repo
-          paths:
-            - "*.tar.gz"
-            - "*.tgz"
+          paths: .
   publish:
     <<: *defaults
     steps:
