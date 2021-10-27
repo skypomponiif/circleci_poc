@@ -38,29 +38,18 @@ jobs:
       - run: 
           name: Run tests with coverage
           command: npm run test
-  
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - "*.tar.gz"
+            - "*.tgz"
   publish:
     <<: *defaults
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/project
       - serverless/setup
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run:
-          name: Install and dependencies
-          command: |
-            npm install
-            npm run setup
-
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-
 
       - run:
           name: Serverless deploy application
