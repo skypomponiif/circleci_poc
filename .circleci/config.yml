@@ -61,12 +61,13 @@ workflows:
   default:
     jobs:
       - build
-      - test
+      - test:
+          requires:
+            - build
       - publish:
           filters:
             branches:
               only:
                 - master
           requires:
-            - build
             - test
