@@ -13,6 +13,6 @@ describe("The handler function", () => {
     })
 
     it("returns a status code equal 200", () => {
-        return expect(result).to.eventually.have.property('statusCode').equal(200);
+        return expect(result).to.eventually.have.property('statusCode').equal(300);
     });
 });
