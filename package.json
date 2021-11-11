@@ -5,8 +5,12 @@
   "scripts": {
     "test": "lerna run test",
     "package": "serverless package",
+    "compile": "lerna run compile",
     "deploy": "serverless deploy",
-    "setup": "lerna clean --yes && lerna bootstrap"
+    "deploy:local": "serverless deploy --stage local",
+    "setup": "lerna clean --yes && lerna bootstrap",
+    "debug:v2:consumer": "cd packages/consumer && npm run debug",
+    "debug:v2:consumer:win": "cd packages/consumer && npm run debug:win"
   },
   "repository": {
     "type": "git",
@@ -18,11 +22,24 @@
     "url": "https://github.com/skypomponiif/circleci_poc/issues"
   },
   "homepage": "https://github.com/skypomponiif/circleci_poc#readme",
+  "dependencies": {
+    "@aws-crypto/client-node": "^3.1.0",
+    "aws-lambda": "^1.0.7",
+    "aws-sdk": "^2.1014.0",
+    "chai-as-promised": "^7.1.1",
+    "cross-env": "^7.0.3",
+    "typescript": "^4.4.4"
+  },
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.85",
     "chai": "^4.3.4",
     "lerna": "^4.0.0",
     "mocha": "9.1.1",
+    "serverless": "^2.66.1",
+    "serverless-dotenv-plugin": "^3.10.0",
     "serverless-jetpack": "^0.11.1",
+    "serverless-localstack": "^0.4.35",
+    "serverless-offline": "^8.2.0",
     "serverless-prune-plugin": "^1.6.1"
   },
   "nyc": {
@@ -40,10 +57,5 @@
       "lcov"
     ],
     "all": true
-  },
-  "dependencies": {
-    "aws-sdk": "^2.1014.0",
-    "chai-as-promised": "^7.1.1",
-    "typescript": "^4.4.4"
   }
 }

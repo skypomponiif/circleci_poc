@@ -1,14 +1,15 @@
 {
   "service": {
-    "service": "circle-poc",
+    "service": "localstack-poc",
     "serviceObject": {
-      "name": "circle-poc"
+      "name": "localstack-poc"
     },
     "provider": {
       "name": "aws",
       "runtime": "nodejs14.x",
-      "region": "eu-west-1",
-      "stage": "dev",
+      "region": "us-east-1",
+      "stage": "local",
+      "lambdaHashingVersion": "20201221",
       "versionFunctions": true,
       "compiledCloudFormationTemplate": {
         "AWSTemplateFormatVersion": "2010-09-09",
@@ -86,7 +87,7 @@
           "LambdaOneLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/circle-poc-dev-lambdaOne"
+              "LogGroupName": "/aws/lambda/localstack-poc-local-lambdaOne"
             }
           },
           "IamRoleLambdaExecution": {
@@ -114,8 +115,8 @@
                     "Fn::Join": [
                       "-",
                       [
-                        "circle-poc",
-                        "dev",
+                        "localstack-poc",
+                        "local",
                         "lambda"
                       ]
                     ]
@@ -131,7 +132,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/circle-poc-dev*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/localstack-poc-local*:*"
                           }
                         ]
                       },
@@ -142,7 +143,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/circle-poc-dev*:*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/localstack-poc-local*:*:*"
                           }
                         ]
                       }
@@ -155,8 +156,8 @@
                 "Fn::Join": [
                   "-",
                   [
-                    "circle-poc",
-                    "dev",
+                    "localstack-poc",
+                    "local",
                     {
                       "Ref": "AWS::Region"
                     },
@@ -173,11 +174,11 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/circle-poc/dev/1635247443288-2021-10-26T11:24:03.288Z/circle-poc.zip"
+                "S3Key": "serverless/localstack-poc/local/1636583772416-2021-11-10T22:36:12.416Z/localstack-poc.zip"
               },
               "Handler": "packages/lambda-one/src/handler.hello",
               "Runtime": "nodejs14.x",
-              "FunctionName": "circle-poc-dev-lambdaOne",
+              "FunctionName": "localstack-poc-local-lambdaOne",
               "MemorySize": 1024,
               "Timeout": 6,
               "Role": {
@@ -191,20 +192,20 @@
               "LambdaOneLogGroup"
             ]
           },
-          "LambdaOneLambdaVersioniRQCoTbF8GtlXsx5So7GTMutrmOxQ9oQmDHrCl258b8": {
+          "LambdaOneLambdaVersionvHmlxIqz3qkABLNq4yXCMp2ODfplU80QtusGu6BQxY": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "LambdaOneLambdaFunction"
               },
-              "CodeSha256": "V6PC57pz6IfdFfxfabeAioQfRBv0/uAjZpgHgZpu3GI="
+              "CodeSha256": "MSQWgidYxur9hJOap43eEqYFrJ+S1Fr1TFjC8Rn/YO8="
             }
           },
           "ApiGatewayRestApi": {
             "Type": "AWS::ApiGateway::RestApi",
             "Properties": {
-              "Name": "dev-circle-poc",
+              "Name": "local-localstack-poc",
               "EndpointConfiguration": {
                 "Types": [
                   "EDGE"
@@ -319,13 +320,13 @@
               "LambdaOneLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1635247438238": {
+          "ApiGatewayDeployment1636583762315": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               },
-              "StageName": "dev"
+              "StageName": "local"
             },
             "DependsOn": [
               "ApiGatewayMethodLambdaoneOptions",
@@ -368,6 +369,13 @@
                 ]
               }
             }
+          },
+          "KinesisStream": {
+            "Type": "AWS::Kinesis::Stream",
+            "Properties": {
+              "Name": "kinesis-stream-cst",
+              "ShardCount": 1
+            }
           }
         },
         "Outputs": {
@@ -376,16 +384,16 @@
               "Ref": "ServerlessDeploymentBucket"
             },
             "Export": {
-              "Name": "sls-circle-poc-dev-ServerlessDeploymentBucketName"
+              "Name": "sls-localstack-poc-local-ServerlessDeploymentBucketName"
             }
           },
           "LambdaOneLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "LambdaOneLambdaVersioniRQCoTbF8GtlXsx5So7GTMutrmOxQ9oQmDHrCl258b8"
+              "Ref": "LambdaOneLambdaVersionvHmlxIqz3qkABLNq4yXCMp2ODfplU80QtusGu6BQxY"
             },
             "Export": {
-              "Name": "sls-circle-poc-dev-LambdaOneLambdaFunctionQualifiedArn"
+              "Name": "sls-localstack-poc-local-LambdaOneLambdaFunctionQualifiedArn"
             }
           },
           "ServiceEndpoint": {
@@ -406,12 +414,12 @@
                   {
                     "Ref": "AWS::URLSuffix"
                   },
-                  "/dev"
+                  "/local"
                 ]
               ]
             },
             "Export": {
-              "Name": "sls-circle-poc-dev-ServiceEndpoint"
+              "Name": "sls-localstack-poc-local-ServiceEndpoint"
             }
           }
         }
@@ -500,14 +508,23 @@
       },
       "vpc": {}
     },
+    "custom": {
+      "localstack": {
+        "debug": true,
+        "stages": [
+          "local",
+          "dev"
+        ],
+        "endpointFile": "localstack_endpoints.json"
+      }
+    },
     "plugins": [
-      "serverless-prune-plugin"
+      "serverless-localstack"
     ],
     "pluginsData": {},
     "functions": {
       "lambdaOne": {
         "handler": "packages/lambda-one/src/handler.hello",
-        "memorySize": 1024,
         "events": [
           {
             "http": {
@@ -533,14 +550,26 @@
             }
           }
         ],
-        "name": "circle-poc-dev-lambdaOne",
+        "name": "localstack-poc-local-lambdaOne",
         "package": {},
         "memory": 1024,
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "LambdaOneLambdaVersioniRQCoTbF8GtlXsx5So7GTMutrmOxQ9oQmDHrCl258b8"
+        "versionLogicalId": "LambdaOneLambdaVersionvHmlxIqz3qkABLNq4yXCMp2ODfplU80QtusGu6BQxY"
       }
+    },
+    "resources": {
+      "Resources": {
+        "KinesisStream": {
+          "Type": "AWS::Kinesis::Stream",
+          "Properties": {
+            "Name": "kinesis-stream-cst",
+            "ShardCount": 1
+          }
+        }
+      },
+      "Outputs": {}
     },
     "configValidationMode": "warn",
     "serviceFilename": "serverless.yml",
@@ -554,16 +583,22 @@
       "provider": {
         "$ref": "$[\"service\"][\"provider\"]"
       },
+      "custom": {
+        "$ref": "$[\"service\"][\"custom\"]"
+      },
       "functions": {
         "$ref": "$[\"service\"][\"functions\"]"
+      },
+      "resources": {
+        "$ref": "$[\"service\"][\"resources\"]"
       }
     },
     "layers": {},
     "isDashboardMonitoringPreconfigured": false,
-    "artifact": "/Users/federicopomponii/Documents/GIT/SKYPOMPONIIF/circleci_poc/.serverless/circle-poc.zip"
+    "artifact": "/Users/federicopomponii/Documents/GIT/SKYPOMPONIIF/circleci_poc/.serverless/localstack-poc.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/circle-poc/dev/1635247443288-2021-10-26T11:24:03.288Z",
-    "artifact": "circle-poc.zip"
+    "artifactDirectoryName": "serverless/localstack-poc/local/1636583772416-2021-11-10T22:36:12.416Z",
+    "artifact": "localstack-poc.zip"
   }
 }

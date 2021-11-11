@@ -21,6 +21,23 @@
       ],
       "cwd": "${workspaceRoot}",
       "internalConsoleOptions": "openOnSessionStart"
-    }
+    },
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Debug EU Portability Consumer V2 Handler",
+			"cwd": "${workspaceRoot}",
+			"runtimeVersion": "14.17.0",
+			"runtimeExecutable": "npm",
+			"protocol": "inspector",
+			"runtimeArgs": ["run-script", "debug:v2:consumer"],
+			"outFiles": ["${workspaceFolder}/packages/consumer/.build/**/*.js"],
+			"port": 9229,
+			"sourceMaps": true,
+			"windows": {
+				"runtimeExecutable": "npm.cmd",
+				"runtimeArgs": ["run-script","debug:v2:consumer:win"]
+			}
+		}
   ]
 }

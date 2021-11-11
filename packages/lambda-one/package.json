@@ -6,6 +6,7 @@
 	"scripts": {
 		"package": "serverless package",
 		"deploy": "serverless deploy",
+		"compile": "echo 'compile not implemented'",
 		"test": "mocha test"
 	},
 	"author": "",

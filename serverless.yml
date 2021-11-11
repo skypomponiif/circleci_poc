@@ -1,17 +1,26 @@
-service: circle-poc
+service: localstack-poc
 
 plugins:
-  - serverless-prune-plugin
+  - serverless-localstack
 
 provider:
   name: aws
   runtime: nodejs14.x
-  region: eu-west-1
+  region: us-east-1
+  stage: local
+  lambdaHashingVersion: '20201221'
+
+custom:
+  localstack:
+    debug: true
+    stages:
+     - local
+     - dev
+    endpointFile: localstack_endpoints.json
 
 functions:
   lambdaOne:
     handler: packages/lambda-one/src/handler.hello
-    memorySize: 1024
     events:
       - http:
           cors: true

@@ -1,0 +1,33 @@
+{
+	"name": "@sky-videoplatform-public-api/eu-portability-consumer",
+	"version": "1.5.0",
+	"description": "Token Generator API",
+	"typings": ".build/src/typings/index.d.ts",
+	"scripts": {
+		"watch": "npx tsc -w -b",
+		"compile": "npx tsc -b",
+		"package": "npx serverless package",
+		"deploy": "npx serverless deploy",
+		"test": "npx cross-env LOG_LEVEL=silent && npx mocha -p --timeout 5000 -r ts-node/register 'test/**/*.test.ts'",
+		"coverage": "nyc npm run test",
+		"debug": "npx cross-env SLS_DEBUG=* && node --inspect ../../node_modules/.bin/serverless offline start --dontPrintOutput",
+		"debug:win": "npx cross-env SLS_DEBUG=* && node --inspect ../../node_modules/serverless/bin/serverless offline start --dontPrintOutput"
+	},
+	"dependencies": {
+		"aws-sdk": "^2.1025.0",
+		"joi": "17.4.2"
+	},
+	"nyc": {
+		"include": [
+			"src/**/*.ts"
+		],
+		"extension": [
+			".ts"
+		],
+		"reporter": [
+			"html",
+			"lcov"
+		],
+		"all": true
+	}
+}
