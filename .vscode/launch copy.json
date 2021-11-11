@@ -1,0 +1,128 @@
+{
+	// Usare IntelliSense per informazioni sui possibili attributi.
+	// Al passaggio del mouse vengono visualizzate le descrizioni degli attributi esistenti.
+	// Per altre informazioni, visitare: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Debug current file w/ mocha",
+			"runtimeVersion": "14.17.0",
+			"env": {
+				"NODE_ENV": "local"
+			},
+			"program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+			"args": [
+				"--ui",
+				"bdd",
+				"--no-timeout",
+				"--colors",
+				"--require",
+				"ts-node/register",
+				"${relativeFile}"
+			],
+			"cwd": "${workspaceRoot}",
+			"internalConsoleOptions": "openOnSessionStart"
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Launch current file w/ ts-node",
+			"runtimeVersion": "14.17.0",
+			"env": {
+				"NODE_ENV": "local"
+			},
+			"protocol": "inspector",
+			"args": ["${relativeFile}"],
+			"cwd": "${workspaceRoot}",
+			"runtimeArgs": ["-r", "ts-node/register"],
+			"internalConsoleOptions": "openOnSessionStart"
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Debug Livestream V2 Handler",
+			"cwd": "${workspaceRoot}",
+			"runtimeVersion": "14.17.0",
+			"runtimeExecutable": "npm",
+			"protocol": "inspector",
+			"runtimeArgs": ["run-script", "debug:livestream"],
+			"outFiles": ["${workspaceFolder}/services/v2/livestream/.build/**/*.js"],
+			"port": 9229,
+			"sourceMaps": true,
+			"windows": {
+				"runtimeExecutable": "npm.cmd",
+				"runtimeArgs": ["run-script","debug:livestream:win"]
+			}
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Debug Playback V2 Handler",
+			"cwd": "${workspaceRoot}",
+			"runtimeVersion": "14.17.0",
+			"runtimeExecutable": "npm",
+			"protocol": "inspector",
+			"runtimeArgs": ["run-script", "debug:v2:playback"],
+			"outFiles": ["${workspaceFolder}/services/v2/playback/.build/**/*.js"],
+			"port": 9229,
+			"sourceMaps": true,
+			"windows": {
+				"runtimeExecutable": "npm.cmd",
+				"runtimeArgs": ["run-script","debug:v2:playback:win"]
+			}
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Debug Listing V2 Handler",
+			"cwd": "${workspaceRoot}",
+			"runtimeVersion": "14.17.0",
+			"runtimeExecutable": "npm",
+			"protocol": "inspector",
+			"runtimeArgs": ["run-script", "debug:v2:listing"],
+			"outFiles": ["${workspaceFolder}/services/v2/listing/.build/**/*.js"],
+			"port": 9229,
+			"sourceMaps": true,
+			"windows": {
+				"runtimeExecutable": "npm.cmd",
+				"runtimeArgs": ["run-script","debug:v2:listing:win"]
+			}
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Debug Token V2 Handler",
+			"cwd": "${workspaceRoot}",
+			"runtimeVersion": "14.17.0",
+			"runtimeExecutable": "npm",
+			"protocol": "inspector",
+			"runtimeArgs": ["run-script", "debug:v2:tokengenerator"],
+			"outFiles": ["${workspaceFolder}/services/v2/tokengenerator/.build/**/*.js"],
+			"port": 9229,
+			"sourceMaps": true,
+			"windows": {
+				"runtimeExecutable": "npm.cmd",
+				"runtimeArgs": ["run-script","debug:v2:tokengenerator:win"]
+			}
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Debug EU Portability Consumer V2 Handler",
+			"cwd": "${workspaceRoot}",
+			"runtimeVersion": "14.17.0",
+			"runtimeExecutable": "npm",
+			"protocol": "inspector",
+			"runtimeArgs": ["run-script", "debug:v2:eu-portability"],
+			"outFiles": ["${workspaceFolder}/eu-portability/consumer/.build/**/*.js"],
+			"port": 9229,
+			"sourceMaps": true,
+			"windows": {
+				"runtimeExecutable": "npm.cmd",
+				"runtimeArgs": ["run-script","debug:v2:eu-portability:win"]
+			}
+		}
+	]
+}

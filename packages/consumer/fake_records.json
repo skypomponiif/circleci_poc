@@ -1,0 +1,24 @@
+{
+    "Records": [
+        {
+            "kinesis" : {
+                "data": "hola1"
+            }
+        },
+        {
+            "kinesis" : {
+                "data": "ciao2"
+            }
+        },
+        {
+            "kinesis" : {
+                "data": "ciao3"
+            }
+        },
+        {
+            "kinesis" : {
+                "data": "ciao4"
+            }
+        }
+    ]
+}

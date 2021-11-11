@@ -1,0 +1,41 @@
+service:
+  name: public-api
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-offline
+
+package:
+  exclude:
+    - ./**
+    - "!.build/**"
+    - "!node_modules/**"
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: eu-west-1
+  stage: v2
+  timeout: 30
+  environment:
+    NODE_ENV: production
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+
+functions:
+  euportabilityconsumerHandler:
+    handler: .build/src/handler.euPortabilityConsumerHandler
+    name: ${self:service.name}-eu-portability-consumer-handler-${env:TARGET_ENV}
+    memorySize: 1024
+    timeout: 15
+    architecture: arm64
+    environment:
+      ACCESS_KEY_ID: ${env:ACCESS_KEY_ID}
+      ACCESS_KEY_SECRET: ${env:ACCESS_KEY_SECRET}
+      BUCKET_NAME: ${env:BUCKET_NAME}
+      ENCRYPTION_KEY_ARN: ${env:ENCRYPTION_KEY_ARN}
+    events:
+      - http:
+          cors: true
+          method: get
+          path: /vdsp/test
+
